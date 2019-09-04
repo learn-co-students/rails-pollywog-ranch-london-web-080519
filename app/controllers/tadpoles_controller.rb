@@ -40,11 +40,19 @@ class TadpolesController < ApplicationController
     end
   end
 
+  
   def destroy
     @tadpole.destroy
     respond_to do |format|
       format.html { redirect_to tadpoles_url, notice: 'Tadpole was successfully destroyed.' }
     end
+  end
+  
+  def metamorphose
+    tadpole = Tadpole.find(params[:id])
+    frog = Frog.create(name: tadpole.name, color: tadpole.color, pond_id: tadpole.pond.id)
+    tadpole.destroy
+    redirect_to frog
   end
 
   private
